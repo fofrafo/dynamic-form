@@ -42,8 +42,8 @@ After deployment, set these environment variables in Netlify:
 ### **Required Variables:**
 ```
 OPENAI_API_KEY=your_openai_api_key_here
-SUPABASE_URL=https://hayhcvdromexsuibenwh.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhheWhjdmRyb21leHN1aWJlbndoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyNDU0MDYsImV4cCI6MjA1NzgyMTQwNn0.fH4P1K_NcMPzDz7BSHq8B2sCImN8FAbAycK3VKJtkJk
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key_here
 USE_DEMO_MODE=false
 ```
 
