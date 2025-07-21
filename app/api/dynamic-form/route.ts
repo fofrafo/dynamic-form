@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const SUPABASE_URL = 'https://hayhcvdromexsuibenwh.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhheWhjdmRyb21leHN1aWJlbndoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyNDU0MDYsImV4cCI6MjA1NzgyMTQwNn0.fH4P1K_NcMPzDz7BSHq8B2sCImN8FAbAycK3VKJtkJk';
+// Mark this route as dynamic (not statically rendered)
+export const dynamic = 'force-dynamic';
+
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://your-project.supabase.co';
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'your-anon-key';
 
 export async function GET(request: NextRequest) {
   try {
-    // Get URL parameters
-    const { searchParams } = new URL(request.url);
+    // Get URL parameters from NextRequest (avoids request.url dynamic usage)
+    const { searchParams } = request.nextUrl;
     const tierart = searchParams.get('tierart');
     const alter = searchParams.get('alter');
     const name = searchParams.get('name');
@@ -34,8 +37,8 @@ export async function GET(request: NextRequest) {
         <code>/api/dynamic-form?tierart=Hund&alter=2%20Jahre&name=Max&anlass=Lahmheit</code></p>
         </div>
         </body></html>`,
-        { 
-          status: 400, 
+        {
+          status: 400,
           headers: { 'Content-Type': 'text/html; charset=utf-8' }
         }
       );
@@ -65,13 +68,12 @@ export async function GET(request: NextRequest) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('🚨 Edge Function Error:', response.status, errorText);
-      
+
       return new NextResponse(
         `<!DOCTYPE html>
         <html><head><title>Service Error</title><style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 2rem; }
-        .error { background: #fee; border: 1px solid #fcc; padding: 2rem; border-radius: 0.5rem; text-align: center; }
-        </style></head><body>
+        .error { background: #fee; border: 1px solid #fcc; padding: 2rem; border-radius: 0.5rem; text-align: center; }</style></head><body>
         <div class="error">
         <h1>⚠️ Service Temporarily Unavailable</h1>
         <p>The dynamic form service is currently unavailable.</p>
@@ -79,8 +81,8 @@ export async function GET(request: NextRequest) {
         <p><small>Please try again in a few moments.</small></p>
         </div>
         </body></html>`,
-        { 
-          status: 500, 
+        {
+          status: 500,
           headers: { 'Content-Type': 'text/html; charset=utf-8' }
         }
       );
@@ -88,7 +90,7 @@ export async function GET(request: NextRequest) {
 
     // Get the HTML content from the edge function
     const htmlContent = await response.text();
-    
+
     console.log('✅ Successfully received HTML content');
 
     // Return the HTML directly to the browser
@@ -103,13 +105,12 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('🚨 Wrapper API Error:', error);
-    
+
     return new NextResponse(
       `<!DOCTYPE html>
       <html><head><title>Unexpected Error</title><style>
       body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 2rem; }
-      .error { background: #fee; border: 1px solid #fcc; padding: 2rem; border-radius: 0.5rem; text-align: center; }
-      </style></head><body>
+      .error { background: #fee; border: 1px solid #fcc; padding: 2rem; border-radius: 0.5rem; text-align: center; }</style></head><body>
       <div class="error">
       <h1>⚠️ Unexpected Error</h1>
       <p><strong>Something went wrong:</strong></p>
@@ -117,8 +118,8 @@ export async function GET(request: NextRequest) {
       <p><small>Please check your parameters and try again.</small></p>
       </div>
       </body></html>`,
-      { 
-        status: 500, 
+      {
+        status: 500,
         headers: { 'Content-Type': 'text/html; charset=utf-8' }
       }
     );

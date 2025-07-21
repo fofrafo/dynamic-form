@@ -3,9 +3,9 @@ import { demoQuestions, demoCompletions, getDemoScenario, generateSpecificQuesti
 import { logApiRequest, logApiResponse, logError } from './test-logger';
 import { openaiDebugger } from './openai-debugger';
 
-// Use production Supabase for actual OpenAI integration
-const SUPABASE_URL = 'https://hayhcvdromexsuibenwh.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhheWhjdmRyb21leHN1aWJlbndoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyNDU0MDYsImV4cCI6MjA1NzgyMTQwNn0.fH4P1K_NcMPzDz7BSHq8B2sCImN8FAbAycK3VKJtkJk';
+// Use environment variables for Supabase configuration
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://your-project.supabase.co';
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-anon-key';
 
 const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/generate-question-v2`;
 
