@@ -8,18 +8,7 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Redirect all requests to Next.js
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/___netlify-handler"
-  status = 200
-
-# API routes
-[[functions]]
-  function = "api/*"
-  node_bundler = "nft"
-
-# Headers for security and performance
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -28,6 +17,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# API headers
 [[headers]]
   for = "/api/*"
   [headers.values]
